@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_list_agenda"
+            android:icon="@drawable/ic_format_list_bulleted"
+            android:title="@string/menu_list_agenda" />
+        <item
+            android:id="@+id/nav_add"
+            android:icon="@drawable/ic_add_circle"
+            android:title="@string/menu_tambah" />
+        <item
+            android:id="@+id/nav_list_chat"
+            android:icon="@drawable/ic_chat"
+            android:title="@string/menu_list_chat" />
+        <item
+            android:id="@+id/nav_list_logout"
+            android:icon="@drawable/ic_exit"
+            android:title="@string/menu_list_logout" />
+    </group>
+</menu>

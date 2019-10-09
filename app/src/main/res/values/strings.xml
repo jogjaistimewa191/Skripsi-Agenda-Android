@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Agenda Android</string>
+    <string name="title_activity_home">Agenda Android</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Admin</string>
+    <string name="nav_header_subtitle">Sistem Agenda Kegiatan IKPM Musi Banyuasin</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="header_title">Admin</string>
+    <string name="menu_tambah">Tambah Agenda</string>
+    <string name="menu_list_agenda">List Agenda</string>
+    <string name="nama_agenda">Nama Agenda</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="tgl">Tanggal</string>
+    <string name="waktu">Waktu</string>
+    <string name="tambah">Tambah Agenda</string>
+    <string name="token_mapbox">pk.eyJ1IjoiaXphbjA0IiwiYSI6ImNqenBpMmhtODBsNGMzZHIxZDFneXh5MDkifQ.oe933fku04Z9c4gAqm9aPA</string>
+    <string name="place_picker_toolbar_primary_text">Pilih Lokasi</string>
+    <string name="str_exit_place_picker">Exit place picker</string>
+    <string name="menu_list_chat">Chat</string>
+    <string name="str_email">Email</string>
+    <string name="str_passwod">Password</string>
+    <string name="str_bttom_login">Belum punya akun?\nDaftar dulu yuk</string>
+    <string name="str_login">Login</string>
+    <string name="str_nama">Nama</string>
+    <string name="str_register">Register</string>
+    <string name="menu_list_logout">Logout</string>
+    <string name="menu_list_help">Bantuan</string>
+    <string name="jam">Jam</string>
+    <string name="ingatkan">Ingatkan</string>
+    <string name="menuju_lokasi">Menuju Lokasi</string>
+    <string name="plugins_place_picker_toolbar_secondary_text">Pan and Zoom to adjust</string>
+    <string name="chat_admin">Chat Admin</string>
+    <string name="str_username">Username</string>
+</resources>

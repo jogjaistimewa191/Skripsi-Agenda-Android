@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/lyt_sender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:background="@drawable/sent_message">
+
+            <TextView
+                android:id="@+id/tv_message_content_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:text="xxxxxxxx"
+                android:textSize="16sp"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_time_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="2dp"
+            android:layout_gravity="end"
+            android:paddingEnd="10dp"
+            android:text="12:20 AM"
+            android:textColor="@color/colorTextDesc"
+            android:textSize="12sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/lyt_receiver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="2dp"
+            android:gravity="start"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Sender"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="11sp" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/received_message">
+
+            <TextView
+                android:id="@+id/tv_message_content_receive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:minWidth="60dp"
+                android:text="xxxxxxxx"
+                android:textColor="@color/colorDarkGray" />
+
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_time_receive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="1dp"
+            android:gravity="end"
+            android:layout_marginStart="10dp"
+            android:text="12:20 AM"
+            android:textColor="@color/colorTextDesc"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</LinearLayout>
