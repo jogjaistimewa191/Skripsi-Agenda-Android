@@ -8,6 +8,6 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.SOURCE)
 @IntDef({MessageType.SENT, MessageType.RECEIVE})
 public @interface MessageType {
-    int SENT = 3;
+    int SENT = 4;
     int RECEIVE = 2;
 }
