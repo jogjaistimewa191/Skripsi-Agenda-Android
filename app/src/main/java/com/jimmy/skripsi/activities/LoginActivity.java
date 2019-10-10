@@ -60,17 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 preLoginAdmin();
             else
                 preLoginUser();
-//            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-//                edEmail.setError("Masukkan email dengan benar");
-//                edEmail.requestFocus();
-//                return;
-//            }
 
-//            if(password.length() < 6){
-//                edPass.setError("Minimal 6 karakter");
-//                edPass.requestFocus();
-//                return;
-//            }
         });
 
         tvDeskripsi.setOnClickListener(v -> startActivity(new Intent(this, RegisterActivity.class)));

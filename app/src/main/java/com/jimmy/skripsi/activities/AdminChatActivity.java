@@ -184,7 +184,6 @@ public class AdminChatActivity extends AppCompatActivity {
         mRef.child(userKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //holder.tvInitial.setText(data.getNama());
                 UserModel mUser = dataSnapshot.getValue(UserModel.class);
                 if(mUser!=null) {
                     try {

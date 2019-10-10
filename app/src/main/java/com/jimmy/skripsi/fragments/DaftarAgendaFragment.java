@@ -40,13 +40,8 @@ public class DaftarAgendaFragment extends Fragment {
     @BindView(R.id.listAgenda) RecyclerView listAgenda;
     @BindView(R.id.progress_bar) ProgressBar progress_bar;
 
-
-    public static final String aksiLihat = "AKSI_LIHAT";
-    public static final String aksiEdit = "AKSI_LIHAT";
-
     private AgendaAdapter agendaAdapter;
     private DatabaseReference databaseReference;
-    private HomeActivity homeActivty;
     private String refAgenda = "Agenda";
 
     public static DaftarAgendaFragment newInstance() {
@@ -62,7 +57,6 @@ public class DaftarAgendaFragment extends Fragment {
         View view = inflater.inflate(R.layout.daftar_agenda_fragment, container, false);
         ButterKnife.bind(this,view);
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        homeActivty = (HomeActivity) getActivity();
         agendaAdapter = new AgendaAdapter(getContext(), PrefManager.isAdmin());
         listAgenda.setLayoutManager(new LinearLayoutManager(getContext()));
         listAgenda.setAdapter(agendaAdapter);

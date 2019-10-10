@@ -1,4 +1,4 @@
-package com.jimmy.skripsi.activities;
+package com.jimmy.skripsi.helpers;
 
 import android.content.Context;
 import android.util.AttributeSet;

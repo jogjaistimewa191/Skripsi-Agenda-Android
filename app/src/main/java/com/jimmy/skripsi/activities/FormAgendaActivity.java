@@ -211,6 +211,7 @@ public class FormAgendaActivity extends AppCompatActivity implements OnMapReadyC
         dataInsert.setLatitude(resAlamat.getLatitude());
         dataInsert.setLongitude(resAlamat.getLongitude());
         dataInsert.setPengingat(id_pengingat);
+
         addToDatabase(dataInsert, valEdit ? Integer.parseInt(detailAgenda.getId_acara()):lastIdAgenda+1);
     }
 
