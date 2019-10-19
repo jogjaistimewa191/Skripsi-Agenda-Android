@@ -52,7 +52,7 @@ public class FcmService extends FirebaseMessagingService {
 
     private void sendNotification(ChatModel message) {
         Intent intent = PrefManager.isAdmin() ? AdminChatActivity.fromNotif(this, Gxon.to(message)) : ChatActivity.fromNotif(this, Gxon.to(message));
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         int unique_id = (int) System.currentTimeMillis();
 

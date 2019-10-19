@@ -88,7 +88,6 @@ public class ChatActivity extends AppCompatActivity {
         mRequestQue = Volley.newRequestQueue(this);
         if(getIntent().hasExtra("dataNotif")){
             getProfile();
-            idRoom = name+"-"+mUID;
         }else {
             idRoom = PrefManager.getName() +"-"+PrefManager.getUID();
             loadView();
@@ -170,6 +169,7 @@ public class ChatActivity extends AppCompatActivity {
                         UserModel mProfile = dataSnapshot.getValue(UserModel.class);
                         name = mProfile.getNama();
                         mUID = mProfile.getUID();
+                        idRoom = name+"-"+mUID;
                         loadView();
 
                     }
@@ -202,7 +202,7 @@ public class ChatActivity extends AppCompatActivity {
         JSONObject json = new JSONObject();
         mData.setRoomId(idRoom);
         try {
-            json.put("to","/topics/"+"agenda-admin");
+            json.put("to","/topics/"+"agenda-admin");// pakai topics
             JSONObject notificationObj = new JSONObject();
             notificationObj.put("data", Gxon.to(mData));
             json.put("data",notificationObj);

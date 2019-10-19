@@ -165,7 +165,8 @@ public class AdminChatActivity extends AppCompatActivity {
         mData.setMessage(edMsg.getText().toString());
         mData.setTime(MyDate.getCurDateTime());
         mData.setStatus("admin");
-        roomRef.push().setValue(mData);
+        roomRef.push().setValue(mData);//tambah ke database
+
         edMsg.setText("");
         Util.hideSoftKeyboard(this);
         sendNotification(mData);
@@ -187,7 +188,7 @@ public class AdminChatActivity extends AppCompatActivity {
                 UserModel mUser = dataSnapshot.getValue(UserModel.class);
                 if(mUser!=null) {
                     try {
-                        json.put("to",mUser.getTokenFcm());
+                        json.put("to",mUser.getTokenFcm());//pakai token user
                         JSONObject notificationObj = new JSONObject();
                         notificationObj.put("data", Gxon.to(mData));
                         json.put("data",notificationObj);

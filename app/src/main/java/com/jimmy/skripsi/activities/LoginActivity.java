@@ -138,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
     private void actLogin(String email, String password) {
         Util.hideSoftKeyboard(this);
         progressBar.setVisibility(View.VISIBLE);
+
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             progressBar.setVisibility(View.GONE);
             if(task.isSuccessful()) {
