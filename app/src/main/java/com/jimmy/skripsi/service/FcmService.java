@@ -14,8 +14,10 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.jimmy.skripsi.R;
+import com.jimmy.skripsi.activities.AdminChatActivity;
 import com.jimmy.skripsi.activities.ChatActivity;
 import com.jimmy.skripsi.helpers.Gxon;
+import com.jimmy.skripsi.helpers.PrefManager;
 import com.jimmy.skripsi.models.ChatModel;
 
 import org.json.JSONException;
@@ -49,7 +51,7 @@ public class FcmService extends FirebaseMessagingService {
     }
 
     private void sendNotification(ChatModel message) {
-        Intent intent = ChatActivity.fromNotif(this, Gxon.to(message));
+        Intent intent = PrefManager.isAdmin() ? AdminChatActivity.fromNotif(this, Gxon.to(message)) : ChatActivity.fromNotif(this, Gxon.to(message));
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         int unique_id = (int) System.currentTimeMillis();

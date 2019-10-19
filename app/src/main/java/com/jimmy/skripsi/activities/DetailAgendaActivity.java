@@ -190,14 +190,16 @@ public class DetailAgendaActivity extends AppCompatActivity implements OnMapRead
     public void onMapReady(GoogleMap map) {
         gMap = map;
         // For showing a move to my location button
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         gMap.getUiSettings()
                 .setZoomControlsEnabled(true);
         gMap.setMyLocationEnabled(true);
 
-        if(mDetail!=null)addMarker(mDetail);
+        if(mDetail!=null)
+            addMarker(mDetail);
     }
 
     @Override

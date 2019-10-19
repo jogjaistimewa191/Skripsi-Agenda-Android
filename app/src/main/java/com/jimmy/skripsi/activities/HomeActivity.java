@@ -143,7 +143,6 @@ public class HomeActivity extends AppCompatActivity
             open(DaftarAgendaFragment.newInstance(), "List Agenda");
         }else if(id == R.id.nav_list_chat){
             open(UserChatFragment.newInstance(), "List User");
-        }else if(id == R.id.nav_list_bantuan){
         }else if(id == R.id.nav_list_logout){
             new AlertDialog.Builder(this)
                     .setTitle("Yakin Ingin Logout ?")

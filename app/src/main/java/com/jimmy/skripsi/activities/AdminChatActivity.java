@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -43,7 +44,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class AdminChatActivity extends AppCompatActivity {
 
@@ -70,7 +70,7 @@ public class AdminChatActivity extends AppCompatActivity {
     }
 
     public static Intent fromNotif(Context _context, String dataNotif) {
-        Intent i = new Intent(_context, ChatActivity.class);
+        Intent i = new Intent(_context, AdminChatActivity.class);
         i.putExtra("dataNotif", dataNotif);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         _context.startActivity(i);
@@ -194,8 +194,8 @@ public class AdminChatActivity extends AppCompatActivity {
 
                         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://fcm.googleapis.com/fcm/send",
                                 json,
-                                response -> Timber.tag(TAG).d("onResponse: ")
-                                , error -> Timber.tag(TAG).d("onError: %s", error.networkResponse)
+                                response -> Log.d(TAG, "onResponse: ")
+                                , error -> Log.d(TAG, "onError: "+error.networkResponse.toString())
                         ){
                             @Override
                             public Map<String, String> getHeaders() {
