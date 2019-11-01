@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.jimmy.skripsi.models.AgendaModel;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -106,6 +108,16 @@ public class Util {
         Random rnd = new Random();
         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
         return color;
+    }
+
+    public static boolean isValid(AgendaModel mDetail){
+        Calendar calendar = Calendar.getInstance();
+        String dateTime = Util.ConvertDate(mDetail.getTanggal()+" "+mDetail.getWaktu(), "dd-MM-yyyy HH:mm", "yyyy MM dd HH:mm");
+        Date timeAlarm = Util.toDate(dateTime, "yyyy MM dd HH:mm");
+        Date current = calendar.getTime();
+
+        long result = timeAlarm.getTime();
+        return current.getTime() <= result;
     }
 
 }

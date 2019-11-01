@@ -40,6 +40,7 @@ import com.jimmy.skripsi.models.AgendaModel;
 import com.jimmy.skripsi.models.PengingatModel;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -51,18 +52,16 @@ import static com.jimmy.skripsi.activities.PlacePickerActivity.REQUEST_PLACE_PIC
 
 public class FormAgendaActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    @BindView(R.id.edNamaAgenda)
-    EditText edNamaAgenda;
+    @BindView(R.id.edNamaAgenda) EditText edNamaAgenda;
     @BindView(R.id.edDeskripsi) EditText edDeskripsi;
-    @BindView(R.id.edTanggal)
-    TextView edTanggal;
+    @BindView(R.id.edHasilRapat) EditText edHasilRapat;
+    @BindView(R.id.edTanggal) TextView edTanggal;
     @BindView(R.id.edWaktu) TextView edWaktu;
     @BindView(R.id.tvAlamat) TextView tvAlamat;
-    @BindView(R.id.spWaktuPengingat)
-    Spinner spWaktuPengingat;
-    @BindView(R.id.btnTambah)
-    Button btnTambah;
+    @BindView(R.id.spWaktuPengingat) Spinner spWaktuPengingat;
+    @BindView(R.id.btnTambah) Button btnTambah;
     @BindView(R.id.btnPilihLokasi) Button btnPickLokasi;
+    @BindView(R.id.lytHasilRapat) View lytHasilRapat;
 
     private GoogleMap googleMap;
     private LocationTrack gps;
@@ -133,7 +132,7 @@ public class FormAgendaActivity extends AppCompatActivity implements OnMapReadyC
         }
         edTanggal.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view1, year, month, dayOfMonth) -> {
-                edTanggal.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                edTanggal.setText(String.format(Locale.US, "%d-%d-%d", dayOfMonth, month + 1, year));
             },
                     Calendar.getInstance().get(Calendar.YEAR),
                     Calendar.getInstance().get(Calendar.MONTH),
@@ -143,7 +142,7 @@ public class FormAgendaActivity extends AppCompatActivity implements OnMapReadyC
         });
         edWaktu.setOnClickListener(v -> {
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view12, hourOfDay, minute) -> {
-                edWaktu.setText(String.format("%02d:%02d", hourOfDay, minute));
+                edWaktu.setText(String.format(Locale.US, "%02d:%02d", hourOfDay, minute));
             },
                     Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
                     Calendar.getInstance().get(Calendar.MINUTE),
@@ -182,6 +181,7 @@ public class FormAgendaActivity extends AppCompatActivity implements OnMapReadyC
         edTanggal.setText(detailAgenda.getTanggal());
         edWaktu.setText(detailAgenda.getWaktu());
         tvAlamat.setText(detailAgenda.getAlamat());
+        if(detailAgenda.getHasilRapat()!=null)edHasilRapat.setText(detailAgenda.getHasilRapat());
         resAlamat.setLatitude(detailAgenda.getLatitude());
         resAlamat.setLongitude(detailAgenda.getLongitude());
         spWaktuPengingat.setEnabled(valEdit);
@@ -192,8 +192,10 @@ public class FormAgendaActivity extends AppCompatActivity implements OnMapReadyC
         edTanggal.setEnabled(valEdit);
         edWaktu.setEnabled(valEdit);
         tvAlamat.setEnabled(valEdit);
+        edHasilRapat.setEnabled(valEdit);
         btnPickLokasi.setVisibility(valEdit ? View.VISIBLE:View.GONE);
         btnTambah.setVisibility(valEdit ? View.VISIBLE:View.GONE);
+        lytHasilRapat.setVisibility(Util.isValid(detailAgenda) ? View.GONE:View.VISIBLE);
         btnTambah.setText("Edit");
         this.valEdit = valEdit;
 
@@ -211,6 +213,7 @@ public class FormAgendaActivity extends AppCompatActivity implements OnMapReadyC
         dataInsert.setLatitude(resAlamat.getLatitude());
         dataInsert.setLongitude(resAlamat.getLongitude());
         dataInsert.setPengingat(id_pengingat);
+        dataInsert.setHasilRapat(edHasilRapat.getText().toString().trim());
 
         addToDatabase(dataInsert, valEdit ? Integer.parseInt(detailAgenda.getId_acara()):lastIdAgenda+1);
     }
@@ -254,14 +257,12 @@ public class FormAgendaActivity extends AppCompatActivity implements OnMapReadyC
         googleMap = map;
         // For showing a move to my location button
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             return;
         }
         googleMap.getUiSettings()
                 .setZoomControlsEnabled(true);
         googleMap.setMyLocationEnabled(true);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 14));
-
         if(detailAgenda!=null)addMarker(detailAgenda);
 
     }

@@ -10,6 +10,7 @@ public class AgendaModel {
     private String alamat;
     private String latitude;
     private String longitude;
+    private String hasilRapat;
 
     public String getId_acara() {
         return id_acara;
@@ -81,5 +82,13 @@ public class AgendaModel {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public String getHasilRapat() {
+        return hasilRapat;
+    }
+
+    public void setHasilRapat(String hasilRapat) {
+        this.hasilRapat = hasilRapat;
     }
 }

@@ -53,6 +53,8 @@ public class DetailAgendaActivity extends AppCompatActivity implements OnMapRead
     TextView tvPengingat;
     @BindView(R.id.tvAlarm)
     TextView tvAlarm;
+    @BindView(R.id.tvHasilRapat)
+    TextView tvHasilRapat;
     @BindView(R.id.btnPengingat)
     Button btnPengingat;
     @BindView(R.id.btnChat)
@@ -87,6 +89,7 @@ public class DetailAgendaActivity extends AppCompatActivity implements OnMapRead
             tvTgl.setText(mDetail.getTanggal());
             tvJam.setText(mDetail.getWaktu());
             tvAlamat.setText(mDetail.getAlamat());
+            tvHasilRapat.setText(mDetail.getHasilRapat());
 
             for(int i = 0;i < PengingatModel.dataPengingat().size();i++){
                 if(PengingatModel.dataPengingat().get(i).getId().equals(mDetail.getPengingat()))
@@ -114,7 +117,13 @@ public class DetailAgendaActivity extends AppCompatActivity implements OnMapRead
         btnChatAdmin.setOnClickListener(v -> {
             ChatActivity.to(this);
         });
-        btnPengingat.setOnClickListener(v -> setNotif());
+        btnPengingat.setOnClickListener(v -> {
+            if(!Util.isValid(mDetail)){
+                Toast.makeText(this, "Acara sudah lewat", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            setNotif();
+        });
     }
 
     private void addMarker(AgendaModel data){
