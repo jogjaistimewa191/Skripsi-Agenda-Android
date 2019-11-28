@@ -75,7 +75,7 @@ public class HomeActivity extends AppCompatActivity
     private void getProfile() {
         if(PrefManager.isAdmin()){
             FirebaseMessaging.getInstance().subscribeToTopic("agenda-admin");
-            tvName.setText("Admin");
+            tvName.setText(PrefManager.getName());
             return;
         }
         FirebaseMessaging.getInstance().unsubscribeFromTopic("agenda-admin");
@@ -107,7 +107,7 @@ public class HomeActivity extends AppCompatActivity
             permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(this);
         }else {
-            open(DaftarAgendaFragment.newInstance(), "List Agenda");
+            open(DaftarAgendaFragment.newInstance(), "Daftar Agenda");
         }
     }
 
@@ -140,7 +140,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_add) {
             FormAgendaActivity.to(this);
         }else if (id == R.id.nav_list_agenda) {
-            open(DaftarAgendaFragment.newInstance(), "List Agenda");
+            open(DaftarAgendaFragment.newInstance(), "Daftar Agenda");
         }else if(id == R.id.nav_list_chat){
             open(UserChatFragment.newInstance(), "List User");
         }else if(id == R.id.nav_list_logout){
@@ -182,7 +182,7 @@ public class HomeActivity extends AppCompatActivity
             Toast.makeText(this, "Lokasi harus diaktifkan", Toast.LENGTH_SHORT).show();
             finish();
         }else {
-            open(DaftarAgendaFragment.newInstance(), "List Agenda");
+            open(DaftarAgendaFragment.newInstance(), "Daftar Agenda");
         }
     }
 

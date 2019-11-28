@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,12 +14,17 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.jimmy.skripsi.R;
 import com.jimmy.skripsi.helpers.PrefManager;
 import com.jimmy.skripsi.helpers.Util;
+import com.jimmy.skripsi.models.AdminModel;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -94,13 +100,35 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void actLoginAdmin(String user, String pass){
-        if(user.equalsIgnoreCase("jimmy") && pass.equalsIgnoreCase("jimmy")){
-           PrefManager.setAdmin(true);
-           moveToMain();
-           Toast.makeText(this, "Anda login sebagai admin", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(this, "Username/Password salah", Toast.LENGTH_SHORT).show();
-        }
+        DatabaseReference tbAdmin = FirebaseDatabase.getInstance().getReference();
+        Query query = tbAdmin.child("admin").orderByChild("username").equalTo(user);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot admin : dataSnapshot.getChildren()) {
+                        AdminModel adminData = admin.getValue(AdminModel.class);
+                        if (adminData.getPassword().equals(pass)) {
+                            PrefManager.setAdmin(true);
+                            PrefManager.setName(adminData.getUsername());
+                            moveToMain();
+                            Toast.makeText(LoginActivity.this, "Anda login sebagai admin", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Username/Password salah", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                } else {
+                    Toast.makeText(LoginActivity.this, "Admin tidak ditemukan", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void preLoginAdmin(){
@@ -165,6 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                     error = "Kesalahan/email belum terdaftar";
                 }
                 Util.showToast(LoginActivity.this, error);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }

@@ -9,10 +9,6 @@
             android:icon="@drawable/ic_format_list_bulleted"
             android:title="@string/menu_list_agenda" />
         <item
-            android:id="@+id/nav_list_bantuan"
-            android:icon="@drawable/ic_help"
-            android:title="@string/menu_list_help" />
-        <item
             android:id="@+id/nav_list_logout"
             android:icon="@drawable/ic_exit"
             android:title="@string/menu_list_logout" />

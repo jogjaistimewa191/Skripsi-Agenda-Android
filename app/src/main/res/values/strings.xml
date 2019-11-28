@@ -16,7 +16,7 @@
     <string name="menu_send">Send</string>
     <string name="header_title">Admin</string>
     <string name="menu_tambah">Tambah Agenda</string>
-    <string name="menu_list_agenda">List Agenda</string>
+    <string name="menu_list_agenda">Daftar Agenda</string>
     <string name="nama_agenda">Nama Agenda</string>
     <string name="deskripsi">Deskripsi</string>
     <string name="tgl">Tanggal</string>
