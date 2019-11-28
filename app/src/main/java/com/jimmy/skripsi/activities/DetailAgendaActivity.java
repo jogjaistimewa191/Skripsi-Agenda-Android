@@ -9,7 +9,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -106,14 +105,6 @@ public class DetailAgendaActivity extends AppCompatActivity implements OnMapRead
             }
 
         }
-        btnNav.setOnClickListener(v -> {
-            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + mDetail.getLatitude() + "," + mDetail.getLongitude());
-            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-            mapIntent.setPackage("com.google.android.apps.maps");
-            if (mapIntent.resolveActivity(this.getPackageManager()) != null)
-                startActivity(mapIntent);
-            else Util.showToast(this, "Google map belum terinstall");
-        });
         btnChatAdmin.setOnClickListener(v -> {
             ChatActivity.to(this);
         });
@@ -122,7 +113,7 @@ public class DetailAgendaActivity extends AppCompatActivity implements OnMapRead
                 Toast.makeText(this, "Acara sudah lewat", Toast.LENGTH_SHORT).show();
                 return;
             }
-            setNotif();
+            aturPengingat();
         });
     }
 
@@ -135,7 +126,7 @@ public class DetailAgendaActivity extends AppCompatActivity implements OnMapRead
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(data.getLatitude()), Double.parseDouble(data.getLongitude())), 12));
     }
 
-    private void setNotif(){
+    private void aturPengingat(){
         String dateTime = Util.ConvertDate(mDetail.getTanggal()+" "+mDetail.getWaktu(), "dd-MM-yyyy HH:mm", "yyyy MM dd HH:mm");
         Date timeAlarm = Util.toDate(dateTime, "yyyy MM dd HH:mm");
         Date current = calendar.getTime();
@@ -163,21 +154,15 @@ public class DetailAgendaActivity extends AppCompatActivity implements OnMapRead
                 tipe = i;
             }
         }
-
-        long result = timeAlarm.getTime() - setInterval;
-        if (current.getTime() > result) {
-            if(current.getTime() > timeAlarm.getTime() - data.get(1)){
-                finalInterval = timeAlarm.getTime() - data.get(0);
-                setAlarm(finalInterval);
-            }else {
-                long d = timeAlarm.getTime() - data.get(tipe+1);
-                finalInterval = d;
-                setAlarm(finalInterval);
-            }
-        } else {
-            finalInterval = result;
+        if(current.getTime() > timeAlarm.getTime() - data.get(1)){
+            finalInterval = timeAlarm.getTime() - data.get(0);
+            setAlarm(finalInterval);
+        }else {
+            long d = timeAlarm.getTime() - data.get(tipe+1);
+            finalInterval = d;
             setAlarm(finalInterval);
         }
+
     }
 
     private void setAlarm(long iVal) {

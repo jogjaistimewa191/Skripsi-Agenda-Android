@@ -193,11 +193,6 @@ public class ChatActivity extends AppCompatActivity {
         sendNotification(mData);
     }
 
-    private void isTyping(boolean typing) {
-        icSend.setColorFilter(typing ? ContextCompat.getColor(this, R.color.colorPrimary) : ContextCompat.getColor(this, R.color.colorDarkGray), android.graphics.PorterDuff.Mode.MULTIPLY);
-        icSend.setEnabled(typing);
-    }
-
     private void sendNotification(ChatModel mData) {
         JSONObject json = new JSONObject();
         mData.setRoomId(idRoom);
@@ -228,6 +223,13 @@ public class ChatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    private void isTyping(boolean typing) {
+        icSend.setColorFilter(typing ? ContextCompat.getColor(this, R.color.colorPrimary) : ContextCompat.getColor(this, R.color.colorDarkGray), android.graphics.PorterDuff.Mode.MULTIPLY);
+        icSend.setEnabled(typing);
+    }
+
+
 
     @Override
     public boolean onSupportNavigateUp() {

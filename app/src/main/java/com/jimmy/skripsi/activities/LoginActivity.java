@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void actLoginAdmin(String user, String pass){
-        if(user.equalsIgnoreCase("admin") && pass.equalsIgnoreCase("admin")){
+        if(user.equalsIgnoreCase("jimmy") && pass.equalsIgnoreCase("jimmy")){
            PrefManager.setAdmin(true);
            moveToMain();
            Toast.makeText(this, "Anda login sebagai admin", Toast.LENGTH_SHORT).show();

@@ -220,7 +220,7 @@ public class FormAgendaActivity extends AppCompatActivity implements OnMapReadyC
 
     private void addToDatabase(AgendaModel dataInsert, int idAgenda){
         dataInsert.setId_acara(String.valueOf(idAgenda));
-
+        //proses input ke db firebase
         FirebaseDatabase.getInstance().getReference().child(refAgenda)
                 .child(String.valueOf(idAgenda))
                 .setValue(dataInsert).addOnCompleteListener(task -> {
