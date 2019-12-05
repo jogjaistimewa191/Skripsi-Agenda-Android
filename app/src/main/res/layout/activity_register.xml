@@ -65,6 +65,7 @@
                 android:textColor="@color/edittext_color_state"
                 android:inputType="textEmailAddress"
                 android:padding="5dp"
+                android:maxLength="30"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -90,6 +91,7 @@
                 android:textColor="@color/edittext_color_state"
                 android:inputType="textEmailAddress"
                 android:padding="5dp"
+                android:maxLength="30"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -115,6 +117,7 @@
                 android:textColor="@color/edittext_color_state"
                 android:inputType="textPassword"
                 android:padding="5dp"
+                android:maxLength="15"
                 android:textSize="14sp" />
 
         </LinearLayout>
