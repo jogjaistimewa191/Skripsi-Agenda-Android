@@ -31,12 +31,12 @@ public class FcmService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if (remoteMessage.getData().size() > 0) {
-            JSONObject data = null;
+            JSONObject data;
             try {
                 data = new JSONObject(remoteMessage.getData().get("data"));
 
                 ChatModel msg = Gxon.from(data.toString(), ChatModel.class);
-                sendNotification(msg);
+                if(PrefManager.isLogin())sendNotification(msg);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
