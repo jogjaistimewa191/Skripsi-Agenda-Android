@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView textView = (TextView) viewHashMap.get(0);
         textView.setBackgroundResource(R.drawable.btn_round);
         textView.setTextColor(getResources().getColor(R.color.colorDeactive));
+
         bet.setBackgroundResource(R.drawable.gray_button_background);
         bet.setTextColor(getResources().getColor(R.color.colorPrimary));
         viewHashMap.put(0, bet);

@@ -1,13 +1,16 @@
 package com.jimmy.skripsi.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -16,6 +19,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jimmy.skripsi.R;
@@ -24,10 +28,15 @@ import com.jimmy.skripsi.helpers.Gxon;
 import com.jimmy.skripsi.helpers.LocationTrack;
 import com.jimmy.skripsi.helpers.Util;
 import com.jimmy.skripsi.models.AgendaModel;
-
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.geojson.Point;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
+import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 
@@ -36,7 +45,8 @@ public class PlacePickerActivity extends AppCompatActivity implements
         GoogleMap.OnCameraIdleListener,
         OnMapReadyCallback {
 
-    public static final int REQUEST_PLACE_PICKER = 010;
+    public static final int REQUEST_PLACE_PICKER = 100;
+    private static final int REQUEST_CODE_AUTOCOMPLETE = 200;
 
     @BindView(R.id.picker_bottom_sheet)
     CurrentBottomSheet bottomSheet;
@@ -59,6 +69,7 @@ public class PlacePickerActivity extends AppCompatActivity implements
         if (actionBar != null) {
             actionBar.hide();
         }
+        Mapbox.getInstance(this, getString(R.string.token_mapbox));
         setContentView(R.layout.activity_place_picker);
         ButterKnife.bind(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -79,6 +90,21 @@ public class PlacePickerActivity extends AppCompatActivity implements
             finish();
         });
 
+
+    }
+
+    @OnClick(R.id.place_search)
+    public void doSearch() {
+        Intent intent = new PlaceAutocomplete.IntentBuilder()
+                .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : getString(R.string.token_mapbox))
+                .placeOptions(PlaceOptions.builder()
+                        .backgroundColor(Color.parseColor("#EEEEEE"))
+                        .limit(10)
+                        //.addInjectedFeature(home)
+                        //.addInjectedFeature(work)
+                        .build(PlaceOptions.MODE_CARDS))
+                .build(PlacePickerActivity.this);
+        startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
     }
 
     @Override
@@ -122,5 +148,23 @@ public class PlacePickerActivity extends AppCompatActivity implements
 //                bottomSheet.dismissPlaceDetails();
 //            }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_AUTOCOMPLETE) {
+            CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(
+                    new CameraPosition.Builder()
+                            .target(new LatLng(((Point) selectedCarmenFeature.geometry()).latitude(),
+                                    ((Point) selectedCarmenFeature.geometry()).longitude()))
+                            .zoom(18)
+                            .build()));
+            reversetoAddress();
+        }
+
+
+
     }
 }
