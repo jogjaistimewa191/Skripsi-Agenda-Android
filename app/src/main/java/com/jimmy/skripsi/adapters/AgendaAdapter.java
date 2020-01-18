@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,11 +21,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.ItemHolder> {
+public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.ItemHolder> implements Filterable {
 
     private Context context;
     private boolean isAdmin;
     private List<AgendaModel> items = new ArrayList<>();
+    private List<AgendaModel> itemFiltered = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public AgendaAdapter(Context context, boolean isAdmin){
@@ -42,7 +45,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.ItemHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
-        final AgendaModel data = items.get(position);
+        final AgendaModel data = itemFiltered.get(position);
         holder.tvAgenda.setText(data.getNama());
         holder.tvDeskripsi.setText(data.getDeskripsi());
         holder.btnLihat.setOnClickListener(v -> {
@@ -65,7 +68,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.ItemHolder
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return itemFiltered.size();
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder {
@@ -87,6 +90,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.ItemHolder
     public void addItem(List<AgendaModel> data){
         if(items!=null && items.size() > 0)items.clear();
         items.addAll(data);
+        itemFiltered = items;
         notifyDataSetChanged();
     }
 
@@ -105,5 +109,40 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.ItemHolder
 
     public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
         this.onItemClickListener = mItemClickListener;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    itemFiltered = items;
+                } else {
+                    List<AgendaModel> filteredList = new ArrayList<>();
+                    for (AgendaModel row : items) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getNama().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    itemFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = itemFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                itemFiltered = (ArrayList<AgendaModel>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }

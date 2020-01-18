@@ -1,6 +1,13 @@
 package com.jimmy.skripsi.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import androidx.appcompat.widget.SearchView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -8,26 +15,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jimmy.skripsi.R;
 import com.jimmy.skripsi.activities.DetailAgendaActivity;
 import com.jimmy.skripsi.activities.FormAgendaActivity;
-import com.jimmy.skripsi.helpers.PrefManager;
-import com.jimmy.skripsi.models.AgendaModel;
-import com.jimmy.skripsi.R;
-import com.jimmy.skripsi.activities.HomeActivity;
 import com.jimmy.skripsi.adapters.AgendaAdapter;
 import com.jimmy.skripsi.helpers.Gxon;
+import com.jimmy.skripsi.helpers.PrefManager;
 import com.jimmy.skripsi.helpers.Util;
+import com.jimmy.skripsi.models.AgendaModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +39,7 @@ public class DaftarAgendaFragment extends Fragment {
 
     @BindView(R.id.listAgenda) RecyclerView listAgenda;
     @BindView(R.id.progress_bar) ProgressBar progress_bar;
+    @BindView(R.id.search_view) SearchView search_view;
 
     private AgendaAdapter agendaAdapter;
     private DatabaseReference databaseReference;
@@ -80,6 +81,18 @@ public class DaftarAgendaFragment extends Fragment {
             @Override
             public void onEdit(View view, AgendaModel obj, int position) {
                 FormAgendaActivity.edit(getContext(), Gxon.to(obj));
+            }
+        });
+        search_view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                agendaAdapter.getFilter().filter(newText);
+                return true;
             }
         });
         tampil();
